@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 
 import HorizontalScrollbar from "./HorizontalScrollbar";
+import { exerciseOptions, fetchData } from '../utils/fetchData';
 
 const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   const [search, setSearch] = useState("");
@@ -9,7 +10,17 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
 
   useEffect(() => {}, []);
 
-  const handleSearch = () => {};
+  const handleSearch = async () => {
+    if (search) {
+      const exercisesData = await fetch('https://gym-fit.p.rapidapi.com/exercises/search/bodyPart', exerciseOptions);
+      console.log(exercisesData);
+
+      // const searchedExercises = exercisesData.filter();
+
+      // setSearch("");
+      // setExercises(searchedExercises);
+    }
+  };
 
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
@@ -21,8 +32,8 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
           height="76px"
           sx={{ input: { fontWeight: '700', border: 'none', borderRadius: '4px' }, width: { lg: '1170px', xs: '350px' }, backgroundColor: '#fff', borderRadius: '40px' }}
           value={search}
-          onChange={(e) => {}}
-          placeholder='SearchExercises'
+          onChange={(e) => setSearch(e.target.value.toLowerCase())}
+          placeholder='Search Exercises'
           type='text'
         />
         <Button
